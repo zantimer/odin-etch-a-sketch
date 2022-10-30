@@ -115,7 +115,7 @@ function rainbowMode ()
     
 }
 let gridCells = document.getElementsByClassName('grid');
-let rollRainbowColor = 
+
 eraserBtn.addEventListener('click', eraser);
 drawBlackBtn.addEventListener('click', drawBlack);
 wipeBtn.addEventListener('click', wipeGrid);
