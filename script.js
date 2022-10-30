@@ -17,7 +17,9 @@ function makeGrid ()
     {
         const divs = document.createElement('div');
         divs.classList.add('grid');
+        divs.addEventListener('mouseover', changeColor);
         gridBox.appendChild(divs);
+        
     }
     }
 }
@@ -40,8 +42,16 @@ function getGridCount () {
     currentGridSize = result;
     document.documentElement.style.setProperty("--colNum", b);
     document.documentElement.style.setProperty("--rowNum", b);
-    document.documentElement.style.setProperty("--gridHeight", b);
+    
     console.log(currentGridSize);
+};
+function LightenDarkenColor(col, amt) {
+    col = parseInt(col, 16);
+    return (((col & 0x0000FF) + amt) | ((((col >> 8) & 0x00FF) + amt) << 8) | (((col >> 16) + amt) << 16)).toString(16);
+  };
+function changeColor (color)
+{
+    
 }
 gridSizeBtn.addEventListener('click', getGridCount);
 makeGridBtn.addEventListener('click', makeGrid);

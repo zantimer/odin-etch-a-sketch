@@ -1,7 +1,7 @@
 :root {
     --rowNum: 4;
     --colNum: 5;
-    --gridHeight: 120px;
+    --gridHeight: (var(--colNum)*20)px;
 }
 
 body {
@@ -11,27 +11,36 @@ body {
     align-items: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+.middle {
+    display: flex;
+    flex-flow:column nowrap;
+    flex:auto;
+    margin-top:10px;
+    background-color: white;
+}
 .header{
     display: flex;
     flex:auto;
+    justify-content: center;
+    align-items: center;
     margin-bottom: auto;
-    margin-top: -20px;
+    
     margin-right: -5px;
     background-color: gray;
     width: auto;
-    padding-left: 70vh;
-    padding-right: 70vh;
     border:2px solid green;
 }
 .sidebar {
     display: flex;
     flex: auto;
     margin-right: auto;
-    margin-top: -10px;
+    margin-top: -5px;
+    margin-left: -5px;
+    margin-right: 2px;
     flex-flow: column nowrap;
     justify-content: space-evenly;
     align-items: center;
-    width: 150px;
+    max-width: fit-content;
     height: 95vh;
     background-color: grey;
     border: 2px solid green;
@@ -41,7 +50,9 @@ body {
     justify-content: center;
     align-items: center;
     
-    width: 100px;
+    width: 150px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-left: 10px;
@@ -54,21 +65,26 @@ body {
 #gridMaker {
     background-color: aqua;
 }
-.divBox {
+
+.gridBox {
+    height: 400px;
+    width:400px;
+    margin-left: auto;
     margin-right: auto;
+    background-color: blue;
     display: grid;
+    gap:2px;
     grid-auto-flow: row;
     grid-template-columns: repeat(var(--colNum), auto);
-    grid-template-rows: repeat(var(--rowNum), var(--gridHeight));
-    justify-content: space-between;
+    grid-template-rows: repeat(var(--rowNum), auto);
+    justify-content: stretch;
+    align-items: stretch;
+     
 }
 .grid {
     display: flex;
+    flex: 1 1 10px;
     border: 2px solid red;
-    width: 20px;
-    height: 20px;
     flex-flow: row wrap;
-}
-.grid:hover {
-    background-color: red;
+    background-color: green;
 }
