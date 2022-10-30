@@ -5,16 +5,57 @@
 }
 
 body {
-    background-color: aqua;
+    background-color: black;
     display:flex;
     justify-content: center;
     align-items: center;
-    margin-top: 12.5vh;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+.header{
+    display: flex;
+    flex:auto;
+    margin-bottom: auto;
+    margin-top: -20px;
+    margin-right: -5px;
+    background-color: gray;
+    width: auto;
+    padding-left: 70vh;
+    padding-right: 70vh;
+    border:2px solid green;
+}
+.sidebar {
+    display: flex;
+    flex: auto;
+    margin-right: auto;
+    margin-top: -10px;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 150px;
+    height: 95vh;
+    background-color: grey;
+    border: 2px solid green;
+}
+.sideBtn {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    
+    width: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
 #gridMaker {
     background-color: aqua;
 }
 .divBox {
+    margin-right: auto;
     display: grid;
     grid-auto-flow: row;
     grid-template-columns: repeat(var(--colNum), auto);

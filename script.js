@@ -1,6 +1,6 @@
 const makeGridBtn = document.querySelector('#gridMaker');
 const gridSizeBtn = document.querySelector('#gridCount');
-const gridBox = document.querySelector('.divBox');
+const gridBox = document.querySelector('.gridBox');
 const body = document.querySelector('body');
 let currentGridSize = 0;
 let htmlStyles = window.getComputedStyle(document.querySelector('html'));
