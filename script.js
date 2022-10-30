@@ -100,7 +100,8 @@ function drawBlack()
 };
 function rainbowMode ()
 {
-    let randomColor = Math.floor(Math.random()*16777215).toString(16);
+    let rainbowBool = true;
+    let randomColor =() => { return Math.floor(Math.random()*16777215).toString(16)};
     const gridCells = document.getElementsByClassName('grid');
     for (let i = 0; i < gridCells.length; i++)
     {
@@ -108,14 +109,13 @@ function rainbowMode ()
             gridCells[i].style.backgroundColor = currentColor.toString();
         })
         gridCells[i].addEventListener('mouseover', () => {
-            currentColor = randomColor;
-            gridCells[i].style.backgroundColor = currentColor.toString();
-            
+            gridCells[i].style.backgroundColor = '#'+randomColor().toString();
         });
     }
+    
 }
 let gridCells = document.getElementsByClassName('grid');
-
+let rollRainbowColor = 
 eraserBtn.addEventListener('click', eraser);
 drawBlackBtn.addEventListener('click', drawBlack);
 wipeBtn.addEventListener('click', wipeGrid);
