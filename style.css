@@ -1,0 +1,33 @@
+:root {
+    --rowNum: 4;
+    --colNum: 5;
+    --gridHeight: 120px;
+}
+
+body {
+    background-color: aqua;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12.5vh;
+}
+#gridMaker {
+    background-color: aqua;
+}
+.divBox {
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(var(--colNum), auto);
+    grid-template-rows: repeat(var(--rowNum), var(--gridHeight));
+    justify-content: space-between;
+}
+.grid {
+    display: flex;
+    border: 2px solid red;
+    width: 20px;
+    height: 20px;
+    flex-flow: row wrap;
+}
+.grid:hover {
+    background-color: red;
+}
