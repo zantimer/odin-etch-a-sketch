@@ -1,3 +1,4 @@
+//query const vars
 const makeGridBtn = document.querySelector('#gridMaker');
 const gridSizeBtn = document.querySelector('#gridCount');
 const wipeBtn = document.querySelector('#wipe');
@@ -7,13 +8,16 @@ const rainbowBtn = document.querySelector('#rainbow');
 
 const gridBox = document.querySelector('.gridBox');
 const body = document.querySelector('body');
+
+//modifiable vars
 let currentGridSize = 0;
 let htmlStyles = window.getComputedStyle(document.querySelector('html'));
 let rowNum = parseInt(htmlStyles.getPropertyValue("--rowNum"));
 let colNum = parseInt(htmlStyles.getPropertyValue("--colNum"));
-let currentColor = 'black';
+let currentColor = '#000000';
 
-function makeGrid ()
+//main functions
+function makeGrid (n = 100)
 {
     console.log(gridBox.childElementCount);
     let n = currentGridSize;
@@ -24,7 +28,6 @@ function makeGrid ()
         const divs = document.createElement('div');
         divs.classList.add('grid');
         divs.addEventListener('mouseover', () =>{
-            //divs.classList.add('active');
             divs.style.backgroundColor = currentColor.toString();
             currentColor = 'black';
         });
@@ -42,7 +45,7 @@ function getGridCount () {
         }
         
     }
-    let b = prompt('Provide grid count, max 100');
+    let b = prompt('Provide height/width, ie 10(max) makes a 10x10 grid');
     if (b > 10)
     {
         b=10;
@@ -55,10 +58,7 @@ function getGridCount () {
     
     console.log(currentGridSize);
 };
-function LightenDarkenColor(col, amt) {
-    col = parseInt(col, 16);
-    return (((col & 0x0000FF) + amt) | ((((col >> 8) & 0x00FF) + amt) << 8) | (((col >> 16) + amt) << 16)).toString(16);
-  };
+
 function wipeGrid ()
 {
     const gridCells = document.getElementsByClassName('grid');
@@ -67,6 +67,7 @@ function wipeGrid ()
         gridCells[i].style.backgroundColor = 'white';
     };
 };
+
 function eraser() 
 {
     const gridCells = document.getElementsByClassName('grid');
@@ -83,21 +84,14 @@ function eraser()
         });
     }
 };
+
 function drawBlack()
 {
-    const gridCells = document.getElementsByClassName('grid');
-    for (let i = 0; i < gridCells.length; i++)
-    {
-        gridCells[i].removeEventListener('mouseover', () =>{
-            //divs.classList.add('active');
-            gridCells[i].style.backgroundColor = currentColor.toString();
-        });
-        gridCells[i].addEventListener('mouseover', () => {
-            currentColor = 'black';
-            gridCells[i].style.backgroundColor = currentColor.toString();
-        });
-    }
+    removeEvListener(currentColor.toString());
+    currentColor = '#000000'
+    addEvListener(currentColor.toString());
 };
+
 function rainbowMode ()
 {
     let rainbowBool = true;
@@ -113,9 +107,39 @@ function rainbowMode ()
         });
     }
     
-}
-let gridCells = document.getElementsByClassName('grid');
+};
 
+//sub functions
+
+function LightenDarkenColor(col, amt) 
+{
+    col = parseInt(col, 16);
+    return (((col & 0x0000FF) + amt) | ((((col >> 8) & 0x00FF) + amt) << 8) | (((col >> 16) + amt) << 16)).toString(16);
+};
+
+function addEvListener (col)
+{
+    const gridCells = document.getElementsByClassName('grid');
+    for (let i = 0; i < gridCells.length; i++)
+    {
+        gridCells[i].addEventListener('mouseover', () =>{
+            //divs.classList.add('active');
+            gridCells[i].style.backgroundColor = col.toString();
+        });
+    }
+};
+
+function removeEvListener (col)
+{
+    const gridCells = document.getElementsByClassName('grid');
+    for (let i = 0; i < gridCells.length; i++)
+    {
+        gridCells[i].removeEventListener('mouseover', () =>{
+            gridCells[i].style.backgroundColor = col.toString();
+        });
+    }
+}
+//button events
 eraserBtn.addEventListener('click', eraser);
 drawBlackBtn.addEventListener('click', drawBlack);
 wipeBtn.addEventListener('click', wipeGrid);
