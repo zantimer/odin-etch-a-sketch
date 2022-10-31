@@ -50,10 +50,10 @@ function getGridCount () {
         }
         
     }
-    let b = prompt('Provide height/width, ie 10(max) makes a 10x10 grid');
-    if (b > 10)
+    let b = prompt('Provide height/width, ie 100(max) makes a 100x100 grid');
+    if (b > 100)
     {
-        b=10;
+        b=100;
     }
     let result = b*b;
     
