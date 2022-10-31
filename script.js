@@ -8,19 +8,19 @@ const rainbowBtn = document.querySelector('#rainbow');
 
 const gridBox = document.querySelector('.gridBox');
 const body = document.querySelector('body');
+const middleBody = document.querySelector('.middle');
 
 //modifiable vars
-let currentGridSize = 0;
+let currentGridSize = 100;
 let htmlStyles = window.getComputedStyle(document.querySelector('html'));
 let rowNum = parseInt(htmlStyles.getPropertyValue("--rowNum"));
 let colNum = parseInt(htmlStyles.getPropertyValue("--colNum"));
-let currentColor = '#000000';
+let currentColor = '#ffffff';
 
 //main functions
 function makeGrid (n = 100)
 {
     console.log(gridBox.childElementCount);
-    let n = currentGridSize;
     if (gridBox.childElementCount == 0)
     {
     for (let i = 0; i < n; i++)
@@ -28,12 +28,17 @@ function makeGrid (n = 100)
         const divs = document.createElement('div');
         divs.classList.add('grid');
         divs.addEventListener('mouseover', () =>{
+            if (drawBoolean==true)
+            {
             divs.style.backgroundColor = currentColor.toString();
-            currentColor = 'black';
+            currentColor = '#FFFFFF';
+            };
         });
         gridBox.appendChild(divs);
     };
     };
+    addBoolListener();
+    
     
 }
 function getGridCount () {
@@ -56,6 +61,7 @@ function getGridCount () {
     document.documentElement.style.setProperty("--colNum", b);
     document.documentElement.style.setProperty("--rowNum", b);
     
+    makeGrid(currentGridSize);
     console.log(currentGridSize);
 };
 
@@ -64,7 +70,7 @@ function wipeGrid ()
     const gridCells = document.getElementsByClassName('grid');
     for (let i = 0; i < gridCells.length; i++)
     {
-        gridCells[i].style.backgroundColor = 'white';
+        gridCells[i].style.backgroundColor = '#ffffff';
     };
 };
 
@@ -79,8 +85,10 @@ function eraser()
         });
         gridCells[i].addEventListener('mouseover', () => {
             currentColor = 'white';
+            if(drawBoolean == true)
+            {
             gridCells[i].style.backgroundColor = currentColor.toString();
-            
+            };
         });
     }
 };
@@ -88,13 +96,13 @@ function eraser()
 function drawBlack()
 {
     removeEvListener(currentColor.toString());
-    currentColor = '#000000'
-    addEvListener(currentColor.toString());
+    addEvListener('#000000');
+    currentColor = '#000000';
+    console.log(currentColor);
 };
 
 function rainbowMode ()
 {
-    let rainbowBool = true;
     let randomColor =() => { return Math.floor(Math.random()*16777215).toString(16)};
     const gridCells = document.getElementsByClassName('grid');
     for (let i = 0; i < gridCells.length; i++)
@@ -103,18 +111,43 @@ function rainbowMode ()
             gridCells[i].style.backgroundColor = currentColor.toString();
         })
         gridCells[i].addEventListener('mouseover', () => {
+            if(drawBoolean == true)
+            {
             gridCells[i].style.backgroundColor = '#'+randomColor().toString();
+            }
         });
     }
-    
 };
 
 //sub functions
-
-function LightenDarkenColor(col, amt) 
-{
-    col = parseInt(col, 16);
-    return (((col & 0x0000FF) + amt) | ((((col >> 8) & 0x00FF) + amt) << 8) | (((col >> 16) + amt) << 16)).toString(16);
+// TODO: can't get this one to work - need to revisit when sanity recouperates
+function LightenDarkenColor(col, amt) {
+  
+    var usePound = false;
+  
+    if (col[0] == "#") {
+        col = col.slice(1);
+        usePound = true;
+    }
+ 
+    var num = parseInt(col,16);
+ 
+    var r = (num >> 16) + amt;
+ 
+    if (r > 255) r = 255;
+    else if  (r < 0) r = 0;
+ 
+    var b = ((num >> 8) & 0x00FF) + amt;
+ 
+    if (b > 255) b = 255;
+    else if  (b < 0) b = 0;
+ 
+    var g = (num & 0x0000FF) + amt;
+ 
+    if (g > 255) g = 255;
+    else if (g < 0) g = 0;
+ 
+    return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
 };
 
 function addEvListener (col)
@@ -123,8 +156,14 @@ function addEvListener (col)
     for (let i = 0; i < gridCells.length; i++)
     {
         gridCells[i].addEventListener('mouseover', () =>{
-            //divs.classList.add('active');
-            gridCells[i].style.backgroundColor = col.toString();
+            if (drawBoolean == true)
+            {
+            gridCells[i].style.backgroundColor = col;
+            }
+            else if(drawBoolean == false)
+            {
+                gridCells[i].style.backgroundColor = gridCells[i].style.backgroundColor;
+            }
         });
     }
 };
@@ -135,17 +174,40 @@ function removeEvListener (col)
     for (let i = 0; i < gridCells.length; i++)
     {
         gridCells[i].removeEventListener('mouseover', () =>{
-            gridCells[i].style.backgroundColor = col.toString();
+            gridCells[i].style.backgroundColor = col;
         });
     }
 }
+window.onload = makeGrid(currentGridSize);
+
+let drawBoolean = true;
+
+function addBoolListener() {
+    const gridCells = document.getElementsByClassName('grid');
+    for (let i = 0; i < gridCells.length; i++)
+    {
+        gridCells[i].addEventListener('mousedown', () =>{
+            drawBoolean = false;
+        });
+        gridCells[i].addEventListener('mouseup', () =>{
+            drawBoolean = true;
+        });
+    };
+};
+
+middleBody.addEventListener('mousedown', () =>
+{
+    drawBoolean = false;
+});
+middleBody.addEventListener('mouseup', () =>{
+    drawBoolean = true;
+});
 //button events
 eraserBtn.addEventListener('click', eraser);
 drawBlackBtn.addEventListener('click', drawBlack);
 wipeBtn.addEventListener('click', wipeGrid);
 rainbowBtn.addEventListener('click', rainbowMode);
 gridSizeBtn.addEventListener('click', getGridCount);
-makeGridBtn.addEventListener('click', makeGrid);
 
 
 
